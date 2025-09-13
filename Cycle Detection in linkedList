@@ -1,0 +1,26 @@
+//fast and slow pointers
+
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+
+        //base case
+       if(head==null){
+        return false;
+       }
+        //to solve many of linkedlist question this tortise rabbit method is used
+        ListNode slow = head;
+        ListNode fast = head;
+
+    //increase fast pointer by two and slow by one
+        while(fast!=null && fast.next!=null){
+          
+            slow=slow.next;
+           fast = fast.next.next;
+            //if at some place they become same that means loop exist
+            if(fast==slow) return true;
+        }
+
+         return false;
+
+    }
+}
