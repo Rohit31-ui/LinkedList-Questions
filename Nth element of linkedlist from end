@@ -1,0 +1,29 @@
+//remove nth element of linkedlist from end
+
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+       //create a dummy start node
+       ListNode dummy = new ListNode(-1);
+       //initially fast and slow will point to dummy
+       ListNode fast=dummy;
+       ListNode slow = dummy;
+
+        //attach head next to dummy
+       dummy.next=head;
+
+       //uptil given n steps move fast one step ahead 
+       for(int i=0;i<=n;i++){
+        fast=fast.next;
+       }
+
+        //after that move both fast and slow by one step until fast will not become null
+       while(fast!=null){
+        fast=fast.next;
+        slow=slow.next;
+       }
+      //remove slows next node by linking next of next node with slow's next node
+       slow.next=slow.next.next;
+      //at the end return dummy.next
+       return dummy.next;
+    }
+}
