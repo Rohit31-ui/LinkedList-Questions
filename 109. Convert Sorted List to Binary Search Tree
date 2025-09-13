@@ -1,0 +1,69 @@
+109. Convert Sorted List to Binary Search Tree
+
+
+Given the head of a singly linked list where elements are sorted in ascending order, convert it to a height-balanced binary search tree.
+
+ 
+
+Example 1:
+
+
+Input: head = [-10,-3,0,5,9]
+Output: [0,-3,9,-10,null,5]
+Explanation: One possible answer is [0,-3,9,-10,null,5], which represents the shown height balanced BST.
+Example 2:
+
+Input: head = []
+Output: []
+ 
+
+Constraints:
+
+The number of nodes in head is in the range [0, 2 * 104].
+-105 <= Node.val <= 105
+
+
+
+class Solution {
+    public TreeNode sortedListToBST(ListNode head) {
+        return solve(head);
+    }
+
+    public static TreeNode solve(ListNode head){
+        if(head==null) return null;
+        if(head.next==null) return new TreeNode(head.val);
+
+        ListNode midPrev=findMidPrev(head);
+        ListNode mid;
+
+        if (midPrev != null) {
+            mid = midPrev.next;
+            midPrev.next = null;  // Break the left part
+        } else {
+            // Only two elements; mid is the second one
+            mid = head;
+            head = null;
+        }
+
+        TreeNode root=new TreeNode(mid.val);
+        root.left=solve(head);
+        root.right=solve(mid.next);
+
+        return root;
+    }
+
+    public static ListNode findMidPrev(ListNode root){
+        if(root==null) return null;
+        ListNode fast=root;
+        ListNode slow=root;
+        ListNode prev=null;
+
+        while(fast!=null && fast.next!=null){
+            prev=slow;
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+
+        return prev;
+    }
+}
